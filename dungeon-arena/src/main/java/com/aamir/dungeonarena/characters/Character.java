@@ -1,74 +1,67 @@
 package com.aamir.dungeonarena.characters;
+
+import com.aamir.dungeonarena.combatstate.CombatState;
+import com.aamir.dungeonarena.combatstate.NormalCombatState;
 import com.aamir.dungeonarena.decorator.Combatant;
 
 /**
- * Abstract base class for all combat characters in the game.
- * It provides shared state and behaviour such as health, attack,
- * damage handling, and defensive stance.
+ * Abstract base class for all combat characters.
+ * Provides shared health, attack, and combat state behaviour.
  */
 public abstract class Character implements Combatant {
+
     private String name;
     private int maxHealth;
     private int health;
     private int attackPower;
-    private boolean defending;
+    private CombatState combatState;
 
-    /**
-     * Constructs a character with a name, maximum health, and attack power.
-     *
-     * @param name        the character's name
-     * @param maxHealth   the maximum and starting health
-     * @param attackPower the base attack damage
-     */
     public Character(String name, int maxHealth, int attackPower) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.attackPower = attackPower;
-        this.defending = false;
+        this.combatState = new NormalCombatState();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public int getMaxHealth() {
         return maxHealth;
     }
 
+    @Override
     public int getHealth() {
         return health;
     }
 
+    @Override
     public int getAttackPower() {
         return attackPower;
     }
 
-    public boolean isDefending() {
-        return defending;
+    @Override
+    public CombatState getCombatState() {
+        return combatState;
     }
 
+    @Override
+    public void setCombatState(CombatState combatState) {
+        this.combatState = combatState;
+    }
+
+    @Override
     public void setAttackPower(int attackPower) {
         this.attackPower = attackPower;
     }
 
-    public void setDefending(boolean defending) {
-        this.defending = defending;
-    }
-
-    /**
-     * Reduces health based on incoming damage.
-     * If the character is defending, damage is halved.
-     *
-     * @param damage the incoming damage value
-     */
+    @Override
     public void takeDamage(int damage) {
-        int finalDamage = damage;
-
-        if (defending) {
-            finalDamage = damage / 2;
-        }
-
+        int finalDamage = combatState.calculateDamage(damage);
         health -= finalDamage;
 
         if (health < 0) {
@@ -76,11 +69,7 @@ public abstract class Character implements Combatant {
         }
     }
 
-    /**
-     * Restores health up to the maximum health limit.
-     *
-     * @param amount amount of health to restore
-     */
+    @Override
     public void heal(int amount) {
         health += amount;
 
@@ -89,21 +78,12 @@ public abstract class Character implements Combatant {
         }
     }
 
-    /**
-     * Checks whether the character is still alive.
-     *
-     * @return true if health is above zero, otherwise false
-     */
+    @Override
     public boolean isAlive() {
         return health > 0;
     }
 
-    /**
-     * Returns the amount of damage this character deals.
-     * This method supports polymorphism and can be overridden later.
-     *
-     * @return attack damage
-     */
+    @Override
     public int attack() {
         return attackPower;
     }

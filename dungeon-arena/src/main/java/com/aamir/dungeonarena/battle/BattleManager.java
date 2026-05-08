@@ -8,6 +8,8 @@ import com.aamir.dungeonarena.decorator.Combatant;
 import com.aamir.dungeonarena.observer.BattleLogDisplay;
 import com.aamir.dungeonarena.observer.GameModel;
 import com.aamir.dungeonarena.observer.StatsDisplay;
+import com.aamir.dungeonarena.combatstate.DefendingCombatState;
+import com.aamir.dungeonarena.combatstate.NormalCombatState;
 
 /**
  * Handles turn-based combat between the player and an enemy.
@@ -68,9 +70,9 @@ public class BattleManager {
             enemy.takeDamage(damage);
             updateModel(player, enemy, round,
                     player.getName() + " attacks " + enemy.getName() +
-                    " for " + damage + " damage.");
+                            " for " + damage + " damage.");
         } else if (choice == 2) {
-            player.setDefending(true);
+            player.setCombatState(new DefendingCombatState());
             updateModel(player, enemy, round,
                     player.getName() + " takes a defensive stance.");
         } else {
@@ -89,7 +91,7 @@ public class BattleManager {
             enemy.takeDamage(damage);
             updateModel(player, enemy, round,
                     player.getName() + " lands a Power Attack on " +
-                    enemy.getName() + " for " + damage + " damage.");
+                            enemy.getName() + " for " + damage + " damage.");
         } else {
             updateModel(player, enemy, round,
                     player.getName() + " uses Power Attack but misses.");
@@ -105,10 +107,10 @@ public class BattleManager {
 
         updateModel(player, enemy, round,
                 enemy.getAttackMessage() +
-                " It deals " + damage +
-                " damage to " + player.getName() + ".");
+                        " It deals " + damage +
+                        " damage to " + player.getName() + ".");
 
-        player.setDefending(false);
+        player.setCombatState(new NormalCombatState());
     }
 
     /**
@@ -144,7 +146,6 @@ public class BattleManager {
                 enemy.getHealth(),
                 enemy.getMaxHealth(),
                 round,
-                message
-        );
+                message);
     }
 }

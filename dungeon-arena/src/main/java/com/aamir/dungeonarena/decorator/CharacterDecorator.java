@@ -1,5 +1,7 @@
 package com.aamir.dungeonarena.decorator;
 
+import com.aamir.dungeonarena.combatstate.CombatState;
+
 /**
  * Base decorator class for modifying Combatant behaviour at runtime.
  * Delegates all calls to the wrapped combatant by default.
@@ -36,13 +38,13 @@ public abstract class CharacterDecorator implements Combatant {
     }
 
     @Override
-    public boolean isDefending() {
-        return wrappedCharacter.isDefending();
+    public CombatState getCombatState() {
+        return wrappedCharacter.getCombatState();
     }
 
     @Override
-    public void setDefending(boolean defending) {
-        wrappedCharacter.setDefending(defending);
+    public void setCombatState(CombatState combatState) {
+        wrappedCharacter.setCombatState(combatState);
     }
 
     @Override
