@@ -36,25 +36,24 @@ public class VictoryState implements GameState {
         }
 
         System.out.println();
-        System.out.println("Choose one buff for the next round only:");
+        System.out.println("Choose one buff:");
         System.out.println("1. Strength Boost (+5 attack)");
         System.out.println("2. Shield Boost (-5 incoming damage)");
         System.out.print("Enter choice: ");
 
         int choice = scanner.nextInt();
 
-        game.resetActivePlayer();
 
         if (choice == 1) {
             game.setActivePlayer(
                 new StrengthBoostDecorator(game.getActivePlayer())
             );
-            System.out.println("Strength Boost applied for the next round.");
+            System.out.println("Strength Boost applied.");
         } else {
             game.setActivePlayer(
                 new ShieldBoostDecorator(game.getActivePlayer())
             );
-            System.out.println("Shield Boost applied for the next round.");
+            System.out.println("Shield Boost applied.");
         }
 
         game.nextRound();

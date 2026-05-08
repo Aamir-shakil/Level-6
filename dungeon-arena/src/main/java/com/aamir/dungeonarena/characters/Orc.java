@@ -11,7 +11,7 @@ public class Orc extends Enemy {
     private boolean heavySmashTriggered;
 
     public Orc() {
-        super("Orc", 80, 18);
+        super("Orc", 60, 18);
     }
 
     @Override

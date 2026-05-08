@@ -33,12 +33,12 @@ public class InstructionsState implements GameState {
         System.out.println("3. Power Attack  - High damage but may miss");
         System.out.println();
 
-        System.out.println("After each victory you choose ONE temporary buff:");
+        System.out.println("After each victory you choose ONE buff:");
         System.out.println("- Strength Boost (+5 attack)");
         System.out.println("- Shield Boost (-5 damage taken)");
         System.out.println();
 
-        System.out.println("Buffs last for ONE round only.");
+        System.out.println("Buffs remain active and can stack across rounds.");
         System.out.println();
 
         System.out.println("Press ENTER to start...");
